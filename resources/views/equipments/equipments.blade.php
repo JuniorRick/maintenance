@@ -31,20 +31,27 @@
 
     @foreach ($equipments as $equipment)
       <tr>
-        <td>{{ $equipment->getCategoryName($equipment->category_id) }}</td>
-        <td>{{ $equipment->name }}</td>
-        <td>{{ $equipment->serial_number }}</td>
-        <td>{{ $equipment->inventory_number }}</td>
-        <td>{{ $equipment->getSectionName($equipment->section_id) }}</td>
-        <td>{{ $equipment->office }}</td>
-        <td>{{ $equipment->details }}</td>
-        <td>
-          <a style="float:left; margin-right: 5px;" class="button is-primary is-small" href="/equipment/{{ $equipment->id}}/edit">Edit</a>
-          <form style="float: left;" action="{{ url('/equipment', ['id' => $equipment->id]) }}" method="post">
+        <td>{{ isset($equipment->category_id) ?
+          $equipment->getCategoryName($equipment->category_id) : "" }}</td>
+        <td>{{ isset($equipment->name) ? $equipment->name : "" }}</td>
+        <td>{{ isset($equipment->serial_number) ? $equipment->serial_number : "" }}</td>
+        <td>{{ isset($equipment->inventory_number) ? $equipment->inventory_number : "" }}</td>
+        <td>{{ isset($equipment->section_id) ?
+            $equipment->getSectionName($equipment->section_id) : "" }}</td>
+        <td>{{ isset($equipment->office) ? $equipment->office : "" }}</td>
+        <td>{{ isset( $equipment->details) ? $equipment->details : "" }}</td>
+        <td style="min-width: 130px;">
+
+          <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
+            @click="fillEquipmentModal({{ $equipment->id}})">Edit</a>
+
+          <form style="float: left;"
+            action="{{ url('/equipment', ['id' => $equipment->id]) }}" method="post">
             <input type="hidden" name="_method" value="DELETE">
             <input class="button is-small is-danger" type="submit" value="Delete" />
             {!! csrf_field() !!}
           </form>
+
       </td>
     @endforeach
 
@@ -53,77 +60,6 @@
   </table>
 </div>
 
-<div class="modal is-active" v-if="showModal">
-  <div class="modal-background">
-     </div>
-  <div class="modal-content">
-
-    <div class="container" style="margin: 0 auto;">
-
-      <form  action="/equipment/post" method="POST">
-
-        @if($errors->any())
-          <div class="alert alert-danger">
-              @foreach($errors->all() as $error)
-                  <p>{{ $error }}</p>
-              @endforeach
-          </div>
-        @endif
-
-        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-        <h1> Add new Equiment</h1>
-        <div class="form-group">
-          <select name="category_id">
-            {{ $categories = App\Category::all() }}
-            <option value="" disabled selected>-- Select Category --</option>
-            @foreach ($categories as $category)
-
-              <option value="{{ $category->id }}">{{ $category->name }}</option>
-
-            @endforeach
-          </select>
-          <label class="control-label" for="select">Category</label><i class="bar"></i>
-        </div>
-        <div class="form-group">
-          <input type="text" required="required" name="name">
-          <label class="control-label" for="input">Name</label><i class="bar"></i>
-        </div>
-        <div class="form-group">
-          <input type="text" name="serial_number">
-          <label class="control-label" for="input">Serial Number</label><i class="bar"></i>
-        </div>
-        <div class="form-group">
-          <input type="text" name='inventory_number'>
-          <label class="control-label" for="input">Inventory Number</label><i class="bar"></i>
-        </div>
-        <div class="form-group">
-          <select name="section_id">
-            <option value="" disabled selected>-- Select Section --</option>
-            {{ $sections = App\Section::all() }}
-            @foreach ($sections as $section)
-
-              <option value=" {{ $section->id }} ">{{ $section->name }}</option>
-
-            @endforeach
-          </select>
-          <label class="control-label" for="select">Section</label><i class="bar"></i>
-        </div>
-        <div class="form-group">
-          <input type="text" name="office">
-          <label class="control-label" for="input">Office</label><i class="bar"></i>
-        </div>
-        <div class="form-group">
-          <textarea name="details"></textarea>
-          <label class="control-label" for="textarea">Details</label><i class="bar"></i>
-        </div>
-
-        <div class="button-container">
-          <button class="button" type="submit"><span>Submit</span></button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <button class="modal-close is-large" @click="showModal=false" aria-label="close"></button>
-</div>
+  @include('equipments.modal')
 
 @endsection

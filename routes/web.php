@@ -22,8 +22,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/equipments', 'EquipmentsController@index');
 
+Route::get('/equipment/{id}', 'EquipmentsController@show');
+
+Route::put('/equipment/{id}/update', 'EquipmentsController@update');
+
 Route::post('/equipment/post', 'EquipmentsController@store');
 
-Route::delete('/equipment/{id}', 'EquipmentsController@destroy');
+Route::delete('/equipment/{id?}', 'EquipmentsController@destroy');
 
-Route::get('/equipment/{id}/edit', 'EquipmentsController@edit');
+Route::get('/equipment/{id?}/edit', 'EquipmentsController@edit');

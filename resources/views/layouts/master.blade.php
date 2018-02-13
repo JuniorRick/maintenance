@@ -10,12 +10,17 @@
 <body>
 
   <div class="section" id="app">
-    <div class="container">
+    <div class="container" style="min-width:980px">
 
       @yield('content')
 
     </div>
   </div>
+
+  <script
+			  src="http://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
   <script src="{!! asset('js/app.js') !!}" charset="utf-8"></script>
 
 </body>
