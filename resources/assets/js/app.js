@@ -8,7 +8,8 @@
 // require('./bootstrap');
 
 window.Vue = require('vue');
-import VueResource from 'vue-resource'
+import VueResource from 'vue-resource';
+
 Vue.use(VueResource);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -16,13 +17,15 @@ Vue.use(VueResource);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 const app = new Vue({
     el: '#app',
 
     data: {
       showModal: false,
+      showCategoryModal: false,
+      showSectionModal: false,
       update: false,
       id: ''
     },
@@ -43,10 +46,10 @@ const app = new Vue({
               $('select[name="section_id"]').val(2);
               $('input[name="office"]').val(response.data.office);
           }, response => {
-            alert( "error" );
+            console.log( "error on http get equipment with id " + id);
           });
 
-      }
+      },
 
     }
 });

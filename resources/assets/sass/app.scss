@@ -99,7 +99,7 @@ body * {
 }
 
 body {
-	background-image: linear-gradient(top, darken($body-bg, 5%), darken($primary, 30%));
+	background-image: linear-gradient(top, darken(#fff, 5%), darken(#a1ab97, 30%));
   background-color: $primary;
   min-height: 100vh;
 }

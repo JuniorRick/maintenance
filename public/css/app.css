@@ -11567,8 +11567,8 @@ body *::before {
 }
 
 body {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#003830));
-  background-image: linear-gradient(top, #f2f2f2, #003830);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#555d4c));
+  background-image: linear-gradient(top, #f2f2f2, #555d4c);
   background-color: #00d1b2;
   min-height: 100vh;
 }

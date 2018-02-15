@@ -17,7 +17,6 @@ class EquipmentsController extends Controller
     $equipment = \App\Equipment::find($id);
 
     return response()->json($equipment);
-    // dd($id);
   }
 
   public function store(Request $request)  {
@@ -28,7 +27,7 @@ class EquipmentsController extends Controller
     $equipment = $request->all();
     \App\Equipment::create($equipment);
 
-    return redirect('equipments')->with('status', 'Your ticket has been created! with id of:' . $request->id);
+    return redirect('equipments');
   }
 
   public function edit($id) {

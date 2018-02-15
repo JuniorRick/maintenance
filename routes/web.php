@@ -24,10 +24,14 @@ Route::get('/equipments', 'EquipmentsController@index');
 
 Route::get('/equipment/{id}', 'EquipmentsController@show');
 
-Route::put('/equipment/{id}/update', 'EquipmentsController@update');
-
 Route::post('/equipment/post', 'EquipmentsController@store');
+
+Route::put('/equipment/{id}/update', 'EquipmentsController@update');
+Route::get('/equipment/{id?}/edit', 'EquipmentsController@edit');
+
 
 Route::delete('/equipment/{id?}', 'EquipmentsController@destroy');
 
-Route::get('/equipment/{id?}/edit', 'EquipmentsController@edit');
+
+
+Route::get('/categories', 'CategoriesController@index');
