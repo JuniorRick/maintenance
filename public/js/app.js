@@ -95,7 +95,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(9);
 
 
 /***/ }),
@@ -126,6 +126,27 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_resource__["a" /* default */]);
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
+
+Vue.component('modal-confirm', {
+  props: ['action', 'value'],
+
+  template: '\n    <div class="modal is-active">\n      <div class="modal-background"></div>\n      <div class="modal-content">\n        <div class="box">\n          Are you sure do you want to delete this?\n          <div class="is-pulled-right">\n            <form\n              :action="action" method="post">\n              <input type="hidden" name="_token" :value="value">\n              <input type="hidden" name="_method" value="DELETE">\n              <input class="button is-danger confirm-modal" type="submit" value="Delete" />\n              <a class="button is-light" @click="$emit(\'close\')">Cancel</a>\n            </form>\n          </div>\n          <div class="is-clearfix"></div>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+
+  data: function data() {
+    return {
+      isActive: false
+    };
+  },
+
+
+  methods: {
+    showConfirm: function showConfirm() {
+      this.isActive = true;
+    }
+  }
+
+});
+
 var app = new Vue({
   el: '#app',
 
@@ -134,7 +155,8 @@ var app = new Vue({
     showCategoryModal: false,
     showSectionModal: false,
     update: false,
-    id: ''
+    id: '',
+    isActive: false
   },
 
   methods: {
@@ -13007,11 +13029,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 /* (ignored) */
 
 /***/ }),
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */
+/* 9 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

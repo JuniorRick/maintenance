@@ -51,13 +51,12 @@
         <td style="min-width: 130px;">
           <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
             @click="fillEquipmentModal({{ $equipment->id}})">Edit</a>
+          <a class="button is-danger is-small" style="float: left;" type="button" @click="isActive=true">Delete</a>
 
-          <form style="float: left;" onsubmit="return confirm()"
-            action="{{ url('/equipment', ['id' => $equipment->id]) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE">
-            <input class="button is-small is-danger" type="submit" value="Delete" />
-            {!! csrf_field() !!}
-          </form>
+          <modal-confirm action="{{ url('/equipment', ['id' => $equipment->id]) }}"
+            v-show="isActive" @close="isActive=false" value={{ csrf_token() }}>
+          </modal-confirm>
+
         </td>
       </tr>
     @endforeach

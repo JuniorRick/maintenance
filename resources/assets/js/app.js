@@ -8,8 +8,8 @@
 // require('./bootstrap');
 
 window.Vue = require('vue');
-import VueResource from 'vue-resource';
 
+import VueResource from 'vue-resource';
 Vue.use(VueResource);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -19,6 +19,47 @@ Vue.use(VueResource);
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
+
+Vue.component('modal-confirm', {
+  props: ['action', 'value'],
+
+  template: `
+    <div class="modal is-active">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="box">
+          Are you sure do you want to delete this?
+          <div class="is-pulled-right">
+            <form
+              :action="action" method="post">
+              <input type="hidden" name="_token" :value="value">
+              <input type="hidden" name="_method" value="DELETE">
+              <input class="button is-danger confirm-modal" type="submit" value="Delete" />
+              <a class="button is-light" @click="$emit('close')">Cancel</a>
+            </form>
+          </div>
+          <div class="is-clearfix"></div>
+        </div>
+      </div>
+      <button class="modal-close is-large" @click="$emit('close')" aria-label="close"></button>
+    </div>
+  `,
+
+  data() {
+    return {
+      isActive: false,
+    }
+  },
+
+    methods: {
+      showConfirm() {
+        this.isActive = true;
+      }
+    }
+
+});
+
+
 const app = new Vue({
     el: '#app',
 
@@ -27,7 +68,8 @@ const app = new Vue({
       showCategoryModal: false,
       showSectionModal: false,
       update: false,
-      id: ''
+      id: '',
+      isActive: false,
     },
 
     methods: {

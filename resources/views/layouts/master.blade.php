@@ -23,18 +23,6 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 
-  <script src="{!! asset('js/bootbox.min.js') !!}" charset="utf-8"></script>
-  <script type="text/javascript">
-  function confirm(e) {
-    e.preventDefault();
-
-    bootbox.confirm("Are you sure you want to detele this?", function(result) {
-      if(result) {
-        $('delete').submit();
-      }
-    });
-  }
-  </script>
   <script src="{!! asset('js/app.js') !!}" charset="utf-8"></script>
 </body>
 </html>
