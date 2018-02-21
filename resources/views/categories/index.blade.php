@@ -105,6 +105,6 @@
 <div class="is-clearfix"></div>
 
 </div>
-  @include('categories.modal')
+  <modal></modal>
 
 @endsection

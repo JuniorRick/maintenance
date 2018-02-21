@@ -125,12 +125,26 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_resource__["a" /* default */]);
  */
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('modal', {
 
+  props: ['action', 'value'],
+
+  template: '\n    <div class="modal is-active">\n      <div class="modal-background">\n         </div>\n      <div class="modal-content">\n\n        <div class="container" style="margin: 0 auto;">\n            <form :action="action" id="add-form" method="post">\n            <input type="hidden" name="_token" :value="value">\n              <slot></slot>\n            <div class="button-container">\n              <button class="button" type="submit"><span>Submit</span></button>\n              <div class="button is-link" @click="$emit(\'close\')"><span>Cancel</span></div>\n            </div>\n          </form>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+
+  data: function data() {
+    return {
+      showModal: false
+    };
+  },
+
+
+  methods: {}
+});
 
 Vue.component('modal-confirm', {
   props: ['action', 'value'],
 
-  template: '\n    <div class="modal is-active">\n      <div class="modal-background"></div>\n      <div class="modal-content">\n        <div class="box">\n          Are you sure do you want to delete this?\n          <div class="is-pulled-right">\n            <form\n              :action="action" method="post">\n              <input type="hidden" name="_token" :value="value">\n              <input type="hidden" name="_method" value="DELETE">\n              <input class="button is-danger confirm-modal" type="submit" value="Delete" />\n              <a class="button is-light" @click="$emit(\'close\')">Cancel</a>\n            </form>\n          </div>\n          <div class="is-clearfix"></div>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+  template: '\n    <div class="modal is-active">\n      <div class="modal-background" style="background: rgba(0, 0, 0, 0.2)"></div>\n      <div class="modal-content">\n        <div class="box bg-white">\n          Are you sure do you want to delete this?\n          <div class="is-pulled-right">\n            <form\n              :action="action" method="post">\n              <input type="hidden" name="_token" :value="value">\n              <input type="hidden" name="_method" value="DELETE">\n              <input class="button is-danger confirm-modal" type="submit" @submit="update=false" value="Delete" />\n              <a class="button is-light" @click="$emit(\'close\')">Cancel</a>\n            </form>\n          </div>\n          <div class="is-clearfix"></div>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
 
   data: function data() {
     return {
@@ -152,8 +166,6 @@ var app = new Vue({
 
   data: {
     showModal: false,
-    showCategoryModal: false,
-    showSectionModal: false,
     update: false,
     id: '',
     isActive: false
@@ -163,20 +175,29 @@ var app = new Vue({
     fillEquipmentModal: function fillEquipmentModal(id) {
       this.showModal = true;
       this.update = true;
+      //this.id is required
       this.id = id;
 
       this.$http.get('/equipment/' + id).then(function (response) {
-        $('select[name="category_id"]').val(response.data.category_id);
-        $('input[name="name"]').val(response.data.name);
-        $('input[name="serial_number"]').val(response.data.serial_number);
-        $('input[name="inventory_number"]').val(response.data.inventory_number);
-        $('select[name="section_id"]').val(2);
-        $('input[name="office"]').val(response.data.office);
+        for (var key in response.data) {
+          if ($('[name="' + key + '"]').length) {
+            $('[name="' + key + '"]').val(response.data[key]);
+          }
+        }
       }, function (response) {
         console.log("error on http get equipment with id " + id);
       });
+    },
+    openEmptyModal: function openEmptyModal() {
+      this.showModal = true;
+      this.update = false;
+
+      $.each($('input, textarea, select', '#add-form'), function () {
+        if ($(this).attr('name') != '_token') $(this).attr('name').val('');
+      });
     }
   }
+
 });
 
 /***/ }),

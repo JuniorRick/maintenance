@@ -18,23 +18,63 @@ Vue.use(VueResource);
  */
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('modal', {
 
-
-Vue.component('modal-confirm', {
-  props: ['action', 'value'],
+  props: [
+      'action',
+      'value',
+  ],
 
   template: `
     <div class="modal is-active">
-      <div class="modal-background"></div>
+      <div class="modal-background">
+         </div>
       <div class="modal-content">
-        <div class="box">
+
+        <div class="container" style="margin: 0 auto;">
+            <form :action="action" id="add-form" method="post">
+            <input type="hidden" name="_token" :value="value">
+              <slot></slot>
+            <div class="button-container">
+              <button class="button" type="submit"><span>Submit</span></button>
+              <div class="button is-link" @click="$emit('close')"><span>Cancel</span></div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <button class="modal-close is-large" @click="$emit('close')" aria-label="close"></button>
+    </div>
+  `,
+
+  data() {
+    return {
+      showModal: false,
+    }
+  },
+
+  methods: {
+
+  }
+})
+
+Vue.component('modal-confirm', {
+  props: [
+    'action',
+    'value',
+  ],
+
+  template: `
+    <div class="modal is-active">
+      <div class="modal-background" style="background: rgba(0, 0, 0, 0.2)"></div>
+      <div class="modal-content">
+        <div class="box bg-white">
           Are you sure do you want to delete this?
           <div class="is-pulled-right">
             <form
               :action="action" method="post">
               <input type="hidden" name="_token" :value="value">
               <input type="hidden" name="_method" value="DELETE">
-              <input class="button is-danger confirm-modal" type="submit" value="Delete" />
+              <input class="button is-danger confirm-modal" type="submit" @submit="update=false" value="Delete" />
               <a class="button is-light" @click="$emit('close')">Cancel</a>
             </form>
           </div>
@@ -55,7 +95,7 @@ Vue.component('modal-confirm', {
       showConfirm() {
         this.isActive = true;
       }
-    }
+    },
 
 });
 
@@ -65,8 +105,6 @@ const app = new Vue({
 
     data: {
       showModal: false,
-      showCategoryModal: false,
-      showSectionModal: false,
       update: false,
       id: '',
       isActive: false,
@@ -77,21 +115,33 @@ const app = new Vue({
       fillEquipmentModal(id) {
         this.showModal = true;
         this.update = true;
+        //this.id is required
         this.id = id;
 
         this.$http.get('/equipment/' + id)
           .then(response => {
-              $('select[name="category_id"]').val(response.data.category_id);
-              $('input[name="name"]').val(response.data.name);
-              $('input[name="serial_number"]').val(response.data.serial_number);
-              $('input[name="inventory_number"]').val(response.data.inventory_number);
-              $('select[name="section_id"]').val(2);
-              $('input[name="office"]').val(response.data.office);
+              for (let key in response.data) {
+                if ($(`[name="${key}"]`).length) {
+                  $(`[name="${key}"]`).val(response.data[key]);
+                }
+            }
           }, response => {
             console.log( "error on http get equipment with id " + id);
           });
 
       },
 
+      openEmptyModal() {
+        this.showModal = true;
+        this.update = false;
+
+        $.each($('input, textarea, select', '#add-form'),  function() {
+          if ($(this).attr('name') != '_token')
+           $(this).attr('name').val('');
+
+        });
+      },
+
     }
+
 });

@@ -12,11 +12,9 @@
 //Bulma
 @import './node_modules/bulma/bulma.sass';
 
-
 .table, .box {
   margin: 0 auto;
-  background-color: rgb(241, 251, 247);;
-
+  background-color: rgba(241, 251, 247, 0.3);
   thead th, tfoot th {
     color: $primary;
   }
@@ -99,8 +97,8 @@ body * {
 }
 
 body {
-	background-image: linear-gradient(top, darken(#fff, 5%), darken(#a1ab97, 30%));
-  background-color: $primary;
+	// background-image: linear-gradient(top, darken(#fff, 5%), darken(#a1ab97, 30%));
+  // background-color: $primary;
   min-height: 100vh;
 }
 
@@ -116,17 +114,20 @@ h1 {
 	}
 }
 
-
+.bg-white {
+  background-color: #fff;
+}
 
 .container {
 	position: relative;
+
 	// max-width: 40rem;
 	// margin: 5rem auto;
 
-  background-color: rgb(241, 251, 247);
+  background-color: #fbfbfb;
 	width: 100%;
 	padding: 3rem 5rem;
-	border-radius: 20px;
+	// border-radius: 20px;
 
 	&::before {
 		content: '';
@@ -146,7 +147,7 @@ h1 {
   // }
 
 	&:hover::before {
-		transform: scale(1);
+		transform: scale(.3);
 	}
 }
 

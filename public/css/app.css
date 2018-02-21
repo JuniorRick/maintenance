@@ -11510,7 +11510,7 @@ label.panel-block:hover {
 .table,
 .box {
   margin: 0 auto;
-  background-color: #f1fbf7;
+  background-color: rgba(241, 251, 247, 0.3);
 }
 
 .table thead th,
@@ -11567,9 +11567,6 @@ body *::before {
 }
 
 body {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#555d4c));
-  background-image: linear-gradient(top, #f2f2f2, #555d4c);
-  background-color: #00d1b2;
   min-height: 100vh;
 }
 
@@ -11586,12 +11583,15 @@ h1 small {
   display: block;
 }
 
+.bg-white {
+  background-color: #fff;
+}
+
 .container {
   position: relative;
-  background-color: #f1fbf7;
+  background-color: #fbfbfb;
   width: 100%;
   padding: 3rem 5rem;
-  border-radius: 20px;
 }
 
 .container::before {
@@ -11613,8 +11613,8 @@ h1 small {
 }
 
 .container:hover::before {
-  -webkit-transform: scale(1);
-          transform: scale(1);
+  -webkit-transform: scale(0.3);
+          transform: scale(0.3);
 }
 
 .button-container {

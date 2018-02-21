@@ -2,7 +2,7 @@
 
 <div class="box">
   <div class="border-bottom">
-    <button class="button is-primary" @click="showModal = true">Add new equipment</button>
+    <button class="button is-primary" @click="openEmptyModal">Add new equipment</button>
   </div>
   <table class="table is-fullwidth">
     <thead>
@@ -65,6 +65,57 @@
   </table>
 </div>
 
-  @include('equipments.modal')
+  <modal :action="update ? '/equipment/' + id + '/update' : '/equipment/post'"
+    v-show="showModal" @close="showModal=false" value={{ csrf_token() }}>
+    <template>
+      <input type="hidden" :name="update ? '_method'  : '' " value="PUT">
+
+        <h1> Add new Equiment</h1>
+        <div class="form-group">
+          <select name="category_id">
+            {{ $categories = App\Category::all() }}
+            <option value="" disabled selected>-- Select Category --</option>
+            @foreach ($categories as $category)
+
+              <option value="{{ $category->id }}">{{ $category->name }}</option>
+
+            @endforeach
+          </select>
+          <label class="control-label" for="select">Category</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <input type="text" required="required" name="name">
+          <label class="control-label" for="input">Name</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <input type="text" required="required" name="serial_number">
+          <label class="control-label" for="input">Serial Number</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <input type="text" required="required" name='inventory_number'>
+          <label class="control-label" for="input">Inventory Number</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <select name="section_id">
+            {{ $sections = App\Section::all() }}
+            <option value="" disabled selected>-- Select Section --</option>
+            @foreach ($sections as $section)
+
+              <option value="{{ $section->id }}">{{ $section->name }}</option>
+
+            @endforeach
+          </select>
+          <label class="control-label" for="select">Section</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <input type="text" name="office" required="required">
+          <label class="control-label" for="input">Office</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <textarea name="details"></textarea>
+          <label class="control-label" for="textarea">Details</label><i class="bar"></i>
+        </div>
+    </template>
+  </modal>
 
 @endsection
