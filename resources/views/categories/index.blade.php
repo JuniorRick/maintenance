@@ -38,13 +38,12 @@
 
             <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
               @click="fillCategoryModal({{ $category->id}})">Edit</a>
+              <a class="button is-danger is-small" style="float: left;" type="button"
+                @click="isActiveCM=true">Delete</a>
 
-            <form style="float: left;"
-              action="{{ url('/category', ['id' => $category->id]) }}" method="post">
-              <input type="hidden" name="_method" value="DELETE">
-              <input class="button is-small is-danger" type="submit" value="Delete" />
-              {!! csrf_field() !!}
-            </form>
+            <modal-confirm action="{{ url('/category', ['id' => $category->id]) }}"
+              v-show="isActiveCM" @close="isActiveCM=false" value={{ csrf_token() }}>
+            </modal-confirm>
 
         </td>
       @endforeach
@@ -52,6 +51,8 @@
         </tr>
       </tbody>
     </table>
+
+      <modal v-show="showCategoryModal"></modal>
   </div>
 
 
@@ -88,12 +89,12 @@
             <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
               @click="fillSectionModal({{ $section->id}})">Edit</a>
 
-            <form style="float: left;"
-              action="{{ url('/section', ['id' => $section->id]) }}" method="post">
-              <input type="hidden" name="_method" value="DELETE">
-              <input class="button is-small is-danger" type="submit" value="Delete" />
-              {!! csrf_field() !!}
-            </form>
+            <a class="button is-danger is-small" style="float: left;" type="button"
+              @click="isActiveSM=true">Delete</a>
+
+            <modal-confirm action="{{ url('/section', ['id' => $section->id]) }}"
+              v-show="isActiveSM" @close="isActiveSM=false" value={{ csrf_token() }}>
+            </modal-confirm>
 
         </td>
       @endforeach
@@ -105,6 +106,6 @@
 <div class="is-clearfix"></div>
 
 </div>
-  <modal></modal>
+
 
 @endsection

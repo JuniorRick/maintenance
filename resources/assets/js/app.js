@@ -37,12 +37,12 @@ Vue.component('modal', {
               <slot></slot>
             <div class="button-container">
               <button class="button" type="submit"><span>Submit</span></button>
-              <div class="button is-link" @click="$emit('close')"><span>Cancel</span></div>
+              <div class="button is-link" @click="$emit('close'),  update=false"><span>Cancel</span></div>
             </div>
           </form>
         </div>
       </div>
-      <button class="modal-close is-large" @click="$emit('close')" aria-label="close"></button>
+      <button class="modal-close is-large" @click="$emit('close'),  update=false" aria-label="close"></button>
     </div>
   `,
 
@@ -88,13 +88,13 @@ Vue.component('modal-confirm', {
   data() {
     return {
       isActive: false,
+      isActiveCM: false,
+      isActiveSM: false,
     }
   },
 
     methods: {
-      showConfirm() {
-        this.isActive = true;
-      }
+
     },
 
 });
@@ -108,6 +108,8 @@ const app = new Vue({
       update: false,
       id: '',
       isActive: false,
+      isActiveCM: false,
+      isActiveSM: false,
     },
 
     methods: {
@@ -136,9 +138,9 @@ const app = new Vue({
         this.update = false;
 
         $.each($('input, textarea, select', '#add-form'),  function() {
-          if ($(this).attr('name') != '_token')
-           $(this).attr('name').val('');
-
+          if ($(this).is(":visible")) {
+            $(this).val('');
+           }
         });
       },
 

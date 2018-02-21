@@ -129,7 +129,7 @@ Vue.component('modal', {
 
   props: ['action', 'value'],
 
-  template: '\n    <div class="modal is-active">\n      <div class="modal-background">\n         </div>\n      <div class="modal-content">\n\n        <div class="container" style="margin: 0 auto;">\n            <form :action="action" id="add-form" method="post">\n            <input type="hidden" name="_token" :value="value">\n              <slot></slot>\n            <div class="button-container">\n              <button class="button" type="submit"><span>Submit</span></button>\n              <div class="button is-link" @click="$emit(\'close\')"><span>Cancel</span></div>\n            </div>\n          </form>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+  template: '\n    <div class="modal is-active">\n      <div class="modal-background">\n         </div>\n      <div class="modal-content">\n\n        <div class="container" style="margin: 0 auto;">\n            <form :action="action" id="add-form" method="post">\n            <input type="hidden" name="_token" :value="value">\n              <slot></slot>\n            <div class="button-container">\n              <button class="button" type="submit"><span>Submit</span></button>\n              <div class="button is-link" @click="$emit(\'close\'),  update=false"><span>Cancel</span></div>\n            </div>\n          </form>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\'),  update=false" aria-label="close"></button>\n    </div>\n  ',
 
   data: function data() {
     return {
@@ -148,16 +148,14 @@ Vue.component('modal-confirm', {
 
   data: function data() {
     return {
-      isActive: false
+      isActive: false,
+      isActiveCM: false,
+      isActiveSM: false
     };
   },
 
 
-  methods: {
-    showConfirm: function showConfirm() {
-      this.isActive = true;
-    }
-  }
+  methods: {}
 
 });
 
@@ -168,7 +166,9 @@ var app = new Vue({
     showModal: false,
     update: false,
     id: '',
-    isActive: false
+    isActive: false,
+    isActiveCM: false,
+    isActiveSM: false
   },
 
   methods: {
@@ -193,7 +193,9 @@ var app = new Vue({
       this.update = false;
 
       $.each($('input, textarea, select', '#add-form'), function () {
-        if ($(this).attr('name') != '_token') $(this).attr('name').val('');
+        if ($(this).is(":visible")) {
+          $(this).val('');
+        }
       });
     }
   }
