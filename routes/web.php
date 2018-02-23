@@ -19,19 +19,35 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-Route::get('/equipments', 'EquipmentsController@index');
-
-Route::get('/equipment/{id}', 'EquipmentsController@show');
-
-Route::post('/equipment/post', 'EquipmentsController@store');
-
-Route::put('/equipment/{id}/update', 'EquipmentsController@update');
-Route::get('/equipment/{id?}/edit', 'EquipmentsController@edit');
-
-
-Route::delete('/equipment/{id?}', 'EquipmentsController@destroy');
+Route::group(['middleware' => ['auth']], function()
+{
+  Route::get('/equipments', 'EquipmentsController@index');
+  Route::get('/equipment/{id}', 'EquipmentsController@show');
+  Route::post('/equipment/post', 'EquipmentsController@store');
+  Route::put('/equipment/{id}/update', 'EquipmentsController@update');
+  Route::delete('/equipment/{id}', 'EquipmentsController@destroy');
 
 
 
-Route::get('/categories', 'CategoriesController@index');
+  Route::get('/groups', 'GroupsController@index');
+
+  Route::get('/groups/category/{id}', 'GroupsController@showCategory');
+  Route::get('/groups/section/{id}', 'GroupsController@showSection');
+
+  Route::post('/groups/category/post', 'GroupsController@storeCategory');
+  Route::post('/groups/section/post', 'GroupsController@storeSection');
+
+  Route::put('/groups/category/{id}/update', 'GroupsController@updateCategory');
+  Route::put('/groups/section/{id}/update', 'GroupsController@updateSection');
+
+  Route::delete('/groups/category/{id}', 'GroupsController@destroyCategory');
+  Route::delete('/groups/section/{id}', 'GroupsController@destroySection');
+
+
+  Route::get('/issues', 'MaintenancesController@index');
+  Route::get('/issue/{id}', 'MaintenancesController@show');
+  Route::post('/issue/post', 'MaintenancesController@store');
+  Route::put('/issue/{id}/update', 'MaintenancesController@update');
+  Route::delete('/issue/{id}', 'MaintenancesController@destroy');
+
+});

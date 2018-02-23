@@ -14,7 +14,18 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <div class="content">
+                        <div class="title m-b-md">
+                            CRDM
+                        </div>
+
+                        <div class="links">
+                            <a href="/equipments">Equipments</a>
+                            <a href="/groups">Groups</a>
+                            <a href="/issues">Issues</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

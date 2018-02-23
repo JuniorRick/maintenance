@@ -59,6 +59,10 @@
                 text-transform: uppercase;
             }
 
+            .links > p {
+              font-weight: bold;
+            }
+
             .m-b-md {
                 margin-bottom: 30px;
             }
@@ -79,15 +83,20 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    IMSP Centrul Republican de Diagnosticare Medicală
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
+                    @if (!Auth::check())
+                      <p>Please log in to continue</p>
+                    @else
+                      <a href="/home">Let's get started</a>
+                    @endif
+                    {{-- <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/laravel/laravel">GitHub</a> --}}
                 </div>
             </div>
         </div>

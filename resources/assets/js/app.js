@@ -37,30 +37,27 @@ Vue.component('modal', {
               <slot></slot>
             <div class="button-container">
               <button class="button" type="submit"><span>Submit</span></button>
-              <div class="button is-link" @click="$emit('close'),  update=false"><span>Cancel</span></div>
+              <div class="button is-link" @click="$emit('close')"><span>Cancel</span></div>
             </div>
           </form>
         </div>
       </div>
-      <button class="modal-close is-large" @click="$emit('close'),  update=false" aria-label="close"></button>
+      <button class="modal-close is-large" @click="$emit('close')" aria-label="close"></button>
     </div>
   `,
 
   data() {
     return {
-      showModal: false,
     }
   },
 
-  methods: {
-
-  }
 })
 
 Vue.component('modal-confirm', {
   props: [
     'action',
     'value',
+    'category'
   ],
 
   template: `
@@ -68,7 +65,7 @@ Vue.component('modal-confirm', {
       <div class="modal-background" style="background: rgba(0, 0, 0, 0.2)"></div>
       <div class="modal-content">
         <div class="box bg-white">
-          Are you sure do you want to delete this?
+          Are you sure do you want to delete this {{ category }}?
           <div class="is-pulled-right">
             <form
               :action="action" method="post">
@@ -87,15 +84,9 @@ Vue.component('modal-confirm', {
 
   data() {
     return {
-      isActive: false,
-      isActiveCM: false,
-      isActiveSM: false,
+
     }
   },
-
-    methods: {
-
-    },
 
 });
 
@@ -105,6 +96,8 @@ const app = new Vue({
 
     data: {
       showModal: false,
+      showCategoryModal: false,
+      showSectionModal: false,
       update: false,
       id: '',
       isActive: false,
@@ -114,13 +107,12 @@ const app = new Vue({
 
     methods: {
 
-      fillEquipmentModal(id) {
-        this.showModal = true;
+      fillModal(id, table) {
         this.update = true;
         //this.id is required
         this.id = id;
 
-        this.$http.get('/equipment/' + id)
+        this.$http.get(`/${table}/${id}`)
           .then(response => {
               for (let key in response.data) {
                 if ($(`[name="${key}"]`).length) {
@@ -128,7 +120,7 @@ const app = new Vue({
                 }
             }
           }, response => {
-            console.log( "error on http get equipment with id " + id);
+            console.log( `error on http get ${table} with id ${id}`);
           });
 
       },
@@ -138,12 +130,13 @@ const app = new Vue({
         this.update = false;
 
         $.each($('input, textarea, select', '#add-form'),  function() {
-          if ($(this).is(":visible")) {
+          if ($(this).attr('type') != 'hidden') {
             $(this).val('');
+            console.log($(this).attr('name'));
            }
         });
       },
 
-    }
+    } //end of methods
 
 });

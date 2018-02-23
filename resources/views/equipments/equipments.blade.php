@@ -50,12 +50,13 @@
 
         <td style="min-width: 130px;">
           <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
-            @click="fillEquipmentModal({{ $equipment->id}})">Edit</a>
+            @click="fillModal({{ $equipment->id}}, 'equipment'), showModal=true">Edit</a>
           <a class="button is-danger is-small" style="float: left;" type="button"
             @click="isActive=true">Delete</a>
 
           <modal-confirm action="{{ url('/equipment', ['id' => $equipment->id]) }}"
-            v-show="isActive" @close="isActive=false" value={{ csrf_token() }}>
+            v-show="isActive" @close="isActive=false" value={{ csrf_token() }}
+            category="equipment">
           </modal-confirm>
 
         </td>
@@ -67,7 +68,7 @@
 </div>
 
   <modal :action="update ? '/equipment/' + id + '/update' : '/equipment/post'"
-    v-show="showModal" @close="showModal=false, update=false" value={{ csrf_token() }}>
+    v-show="showModal" @close="showModal=false" value={{ csrf_token() }}>
     <template>
       <input type="hidden" :name="update ? '_method'  : '' " value="PUT">
 
