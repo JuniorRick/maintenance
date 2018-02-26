@@ -25,4 +25,8 @@ class Maintenance extends Model
     return Call::where('id', $this->call_id)->first()->name;
   }
 
+  public function getUserName() {
+    return User::where('id', $this->user_id)->first()->name;
+  }
+
 }

@@ -21,7 +21,7 @@
 </head>
 <body>
 
-  <nav class="navbar is-white">
+  <nav class="navbar is-white is-mobile">
   <div class="container " style="padding-top: 0; margin-top:0;">
     <div class="navbar-brand">
       <a class="navbar-item brand-text" href="../">
@@ -68,6 +68,7 @@
 			  src="http://code.jquery.com/jquery-3.3.1.min.js"
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
+
 
   <script src="{!! asset('js/app.js') !!}" charset="utf-8"></script>
 </body>

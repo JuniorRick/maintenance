@@ -19,10 +19,7 @@ class MaintenancesController extends Controller
     }
 
     public function store(Request $request)  {
-      // $this->validate($request, [
-      //   'name' => 'required',
-      // ]);
-
+      
       $issue = $request->all();
       \App\Maintenance::create($issue);
 

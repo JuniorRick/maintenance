@@ -45,7 +45,7 @@
         <td>{{ isset($issue->call_id) ? $issue->getCallType() : "" }}</td>
         <td>{{ isset($issue->issue) ? $issue->issue : "" }}</td>
         <td>{{ isset($issue->details) ? $issue->details : "" }}</td>
-        <td>{{ isset( $issue->user_id) ? $issue->user_id : "" }}</td>
+        <td>{{ isset( $issue->user_id) ? $issue->getUserName() : "" }}</td>
 
         <td style="min-width: 130px;">
           <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
@@ -101,7 +101,7 @@
           <label class="control-label" for="input">Issue</label><i class="bar"></i>
         </div>
 
-          <input type="hidden" required="required" name="user_id" value="1">
+          <input type="hidden" required="required" name="user_id" value={{Auth::user()->id}}>
 
 
         <div class="form-group">
