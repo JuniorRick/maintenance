@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 class MaintenancesController extends Controller
 {
     public function index()  {
-      $issues = \App\Maintenance::all();
+      $equipments = \App\Equipment::all();
 
-      return view('maintenance.index')->with('issues', $issues);
+      return view('maintenance.index')->with('equipments', $equipments);
+    }
+
+    public function info($id) {
+      $issues = \App\Maintenance::where('equipment_id', $id)->get();
+      $equipment = \App\Equipment::findOrFail($id);
+      return view('maintenance.info')->with(['issues' => $issues, 'equipment' => $equipment]);
     }
 
     public function show($id) {
@@ -19,11 +25,11 @@ class MaintenancesController extends Controller
     }
 
     public function store(Request $request)  {
-      
+
       $issue = $request->all();
       \App\Maintenance::create($issue);
 
-      return redirect('issues');
+      return redirect()->back();
     }
 
 
@@ -32,14 +38,14 @@ class MaintenancesController extends Controller
       $input = $request->all();
       $issue->fill($input)->save();
 
-      return redirect('issues');
+      return redirect()->back();
     }
 
     public function destroy($id) {
       $issue = \App\Maintenance::findOrFail($id);
       $issue->delete();
 
-      return redirect('issues');
+      return redirect()->back();
     }
 
 }

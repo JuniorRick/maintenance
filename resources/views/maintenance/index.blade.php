@@ -1,31 +1,33 @@
-@extends('layouts.master') @section('title', 'Equipments') @section('content')
+@extends('layouts.master') @section('title', 'Issues') @section('content')
 
 <div class="box">
-  <div class="border-bottom">
-    <button class="button is-primary" @click="openEmptyModal">Add new issue</button>
-  </div>
+  {{-- <div class="border-bottom">
+    <button class="button is-primary" @click="openEmptyModal">Add new equipment</button>
+  </div> --}}
   <table class="table is-fullwidth">
     <thead>
       <tr>
         <th>Nr.</th>
-        <th>Equipment</th>
-        <th>Location</th>
-        <th>Call</th>
-        <th>Issue</th>
+        <th>Category</th>
+        <th>Name</th>
+        <th>S.N.</th>
+        <th>I.N.</th>
+        <th>Section</th>
+        <th>Office</th>
         <th>Details</th>
-        <th>Engineer</th>
 
       </tr>
     </thead>
     <tfoot>
       <tr>
         <th>Nr.</th>
-        <th>Equipment</th>
-        <th>Location</th>
-        <th>Call</th>
-        <th>Issue</th>
+        <th>Category</th>
+        <th>Name</th>
+        <th>S.N.</th>
+        <th>I.N.</th>
+        <th>Section</th>
+        <th>Office</th>
         <th>Details</th>
-        <th>Engineer</th>
       </tr>
     </tfoot>
     <tbody>
@@ -33,30 +35,28 @@
         $counter = 0;
       @endphp
 
-    @foreach ($issues as $issue)
+    @foreach ($equipments as $equipment)
       <tr>
         <td> {{ ++$counter }}</td>
-        <td>{{ isset($issue->equipment_id) ?
-          $issue->getEquipmentName() : "" }}</td>
-        <td>{{ isset($issue->equipment_id) ?
-          $issue->getEquipmentLocation() : "" }}</td>
+        <td>{{ isset($equipment->category_id) ?
+          $equipment->getCategoryName($equipment->category_id) : "" }}</td>
+        <td>{{ isset($equipment->name) ? $equipment->name : "" }}</td>
+        <td>{{ isset($equipment->serial_number) ? $equipment->serial_number : "" }}</td>
+        <td>{{ isset($equipment->inventory_number) ? $equipment->inventory_number : "" }}</td>
+        <td>{{ isset($equipment->section_id) ?
+            $equipment->getSectionName($equipment->section_id) : "" }}</td>
+        <td>{{ isset($equipment->office) ? $equipment->office : "" }}</td>
+        <td>{{ isset( $equipment->details) ? $equipment->details : "" }}</td>
 
-
-        <td>{{ isset($issue->call_id) ? $issue->getCallType() : "" }}</td>
-        <td>{{ isset($issue->issue) ? $issue->issue : "" }}</td>
-        <td>{{ isset($issue->details) ? $issue->details : "" }}</td>
-        <td>{{ isset( $issue->user_id) ? $issue->getUserName() : "" }}</td>
-
+        @if(\App\Maintenance::where('equipment_id', $equipment->id)->get()->count() > 0)
         <td style="min-width: 130px;">
-          <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
-            @click="fillModal({{ $issue->id}}, 'issue'), showModal=true">Edit</a>
-          <a class="button is-danger is-small" style="float: left;" type="button"
-            @click="isActive=true">Delete</a>
-
-          <modal-confirm action="{{ url('/issue', ['id' => $issue->id]) }}"
-            v-show="isActive" @close="isActive=false" value={{ csrf_token() }}
-            category="issue">
-          </modal-confirm>
+          <a style="float:left; margin-right: 5px;" class="button is-link is-small"
+          href="/issue/{{ $equipment->id }}/info">Info</a>
+        @else
+          <td style="min-width: 130px;">
+            <a style="float:left; margin-right: 5px;" class="button is-light is-small"
+            href="/issue/{{ $equipment->id }}/info">Info</a>
+        @endif
 
         </td>
       </tr>
@@ -66,47 +66,55 @@
   </table>
 </div>
 
-  <modal :action="update ? '/issue/' + id + '/update' : '/issue/post'"
+  <modal :action="update ? '/equipment/' + id + '/update' : '/equipment/post'"
     v-show="showModal" @close="showModal=false" value={{ csrf_token() }}>
     <template>
       <input type="hidden" :name="update ? '_method'  : '' " value="PUT">
 
-        <h1> Add new Record</h1>
+        <h1> Add new Equiment</h1>
         <div class="form-group">
-          <select name="equipment_id">
-            {{ $equipments = App\Equipment::all() }}
-            <option value="" disabled selected>-- Select Equipment --</option>
-            @foreach ($equipments as $equipment)
+          <select name="category_id">
+            {{ $categories = App\Category::all() }}
+            <option value="" disabled selected>-- Select Category --</option>
+            @foreach ($categories as $category)
 
-              <option value="{{ $equipment->id }}">{{ $equipment->name . ' (' . $equipment->office . ')'}}</option>
+              <option value="{{ $category->id }}">{{ $category->name }}</option>
 
             @endforeach
           </select>
-          <label class="control-label" for="select">Equipment</label><i class="bar"></i>
+          <label class="control-label" for="select">Category</label><i class="bar"></i>
         </div>
         <div class="form-group">
-          <select name="call_id">
-            {{ $calls = App\Call::all() }}
-            <option value="" disabled selected>-- Select Call Type --</option>
-            @foreach ($calls as $call)
+          <input type="text" required="required" name="name">
+          <label class="control-label" for="input">Name</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <input type="text" required="required" name="serial_number">
+          <label class="control-label" for="input">Serial Number</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <input type="text" required="required" name='inventory_number'>
+          <label class="control-label" for="input">Inventory Number</label><i class="bar"></i>
+        </div>
+        <div class="form-group">
+          <select name="section_id">
+            {{ $sections = App\Section::all() }}
+            <option value="" disabled selected>-- Select Section --</option>
+            @foreach ($sections as $section)
 
-              <option value="{{ $call->id }}">{{ $call->name }}</option>
+              <option value="{{ $section->id }}">{{ $section->name }}</option>
 
             @endforeach
           </select>
-          <label class="control-label" for="select">Call Type</label><i class="bar"></i>
+          <label class="control-label" for="select">Section</label><i class="bar"></i>
         </div>
         <div class="form-group">
-          <input type="text" required="required" name="issue">
-          <label class="control-label" for="input">Issue</label><i class="bar"></i>
+          <input type="text" name="office" required="required">
+          <label class="control-label" for="input">Office</label><i class="bar"></i>
         </div>
-
-          <input type="hidden" required="required" name="user_id" value={{Auth::user()->id}}>
-
-
         <div class="form-group">
           <textarea name="details"></textarea>
-          <label class="control-label" for="textarea">Repair Details</label><i class="bar"></i>
+          <label class="control-label" for="textarea">Details</label><i class="bar"></i>
         </div>
     </template>
   </modal>

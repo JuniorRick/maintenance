@@ -12,6 +12,10 @@ class Maintenance extends Model
     return Equipment::where('id', $this->equipment_id)->first()->name;
   }
 
+  public function getEquipmentSN() {
+    return Equipment::where('id', $this->equipment_id)->first()->serial_number;
+  }
+
   public function getEquipmentLocation() {
     // $section_id = Equipment::where('id', $this->equipment_id)->first()->section_id;
     // $section_name = Section::where('id', $section_id)->first()->name;

@@ -44,10 +44,16 @@ Route::group(['middleware' => ['auth']], function()
   Route::delete('/groups/section/{id}', 'GroupsController@destroySection');
 
 
-  Route::get('/issues', 'MaintenancesController@index');
+  Route::get('issues', 'MaintenancesController@index');
   Route::get('/issue/{id}', 'MaintenancesController@show');
+  Route::get('/issue/{id}/info', 'MaintenancesController@info');
   Route::post('/issue/post', 'MaintenancesController@store');
   Route::put('/issue/{id}/update', 'MaintenancesController@update');
   Route::delete('/issue/{id}', 'MaintenancesController@destroy');
 
+  Route::post('uploads', function() {
+    request()->file('docs')->store('files');
+    
+    return back();
+  });
 });
