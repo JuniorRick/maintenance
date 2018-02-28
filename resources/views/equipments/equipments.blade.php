@@ -52,9 +52,9 @@
           <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
             @click="fillModal({{ $equipment->id}}, 'equipment'), showModal=true">Edit</a>
           <a class="button is-danger is-small" style="float: left;" type="button"
-            @click="isActive=true">Delete</a>
+            @click="saveId({{ $equipment->id }})">Delete</a>
 
-          <modal-confirm action="{{ url('/equipment', ['id' => $equipment->id]) }}"
+          <modal-confirm :action="'/equipment/' + equipmentId"
             v-show="isActive" @close="isActive=false" value={{ csrf_token() }}
             category="equipment">
           </modal-confirm>

@@ -12,6 +12,8 @@
         : "something went wrong" !!}
       </div>
     </div>
+
+
   </div>
   <table class="table is-fullwidth">
     <thead>
@@ -55,21 +57,28 @@
             @click="fillModal({{ $issue->id}}, 'issue'), showModal=true">Edit</a>
           <a class="button is-danger is-small" style="float: left; margin-right: 5px;"
             type="button" @click="isActive=true">Delete</a>
-          {{-- <div class="file is-small">
-            <label class="file-label">
-              <input class="file-input" type="file" name="resume">
-              <span class="file-cta">
-                <span class="file-icon">
-                  <i class="fas fa-upload"></i>
-                </span>
-                <span class="file-label">
-                  Choose a file…
-                </span>
-              </span>
-            </label>
-          </div> --}}
 
-          <modal-confirm action="{{ url('/issue', ['id' => $issue->id]) }}"
+          <a class="button is-info is-small" style="float: left; margin-right: 5px;"
+            type="button" @click="getFiles({{ $issue->id }})" :files="files">Attachments</a>
+
+
+          <modal-files v-show="showModalFiles" :action="'/upload/' + issueId"
+            @close="openModalFiles" value={{ csrf_token() }} >
+
+            <div  style="margin: 5px; padding: 5px; border: 1px solid black">
+              <file-list :files="files">
+                <file v-for="file in files" :title="file.title">
+                  <a :href="'../../uploads/' +file.issue_id + '/' + file.name"
+                    target="_blank" title="">
+                    @{{file.name}}
+                  </a>
+                </file>
+              </file-list>
+            </div>
+
+          </modal-files>
+
+          <modal-confirm :action="'/issue/' + issueId"
             v-show="isActive" @close="isActive=false" value={{ csrf_token() }}
             category="issue">
           </modal-confirm>

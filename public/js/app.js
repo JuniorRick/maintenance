@@ -117,6 +117,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 window.Vue = __webpack_require__(3);
 
 
+
+// window.E = new Vue();
+
+
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_resource__["a" /* default */]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -129,21 +133,41 @@ Vue.component('modal', {
 
   props: ['action', 'value'],
 
-  template: '\n    <div class="modal is-active">\n      <div class="modal-background">\n         </div>\n      <div class="modal-content">\n\n        <div class="container" style="margin: 0 auto;">\n            <form :action="action" id="add-form" method="post">\n            <input type="hidden" name="_token" :value="value">\n              <slot></slot>\n            <div class="button-container">\n              <button class="button" type="submit"><span>Submit</span></button>\n              <div class="button is-link" @click="$emit(\'close\')"><span>Cancel</span></div>\n            </div>\n          </form>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+  template: '\n    <div class="modal is-active">\n      <div class="modal-background">\n         </div>\n      <div class="modal-content">\n\n        <div class="container" style="margin: 0 auto;">\n            <form :action="action" id="add-form" method="post">\n            <input type="hidden" name="_token" :value="value">\n              <slot></slot>\n            <div class="button-container">\n              <button class="button" type="submit"><span>Submit</span></button>\n              <div class="button is-link" @click="$emit(\'close\')"><span>Cancel</span></div>\n            </div>\n          </form>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  '
+});
 
-  data: function data() {
-    return {};
+Vue.component('modal-files', {
+  props: ['action', 'value'],
+  template: '\n    <div class="modal is-active">\n      <div class="modal-background">\n         </div>\n      <div class="modal-content">\n\n        <div class="container" style="margin: 0 auto;">\n          <h1 style="margin-bottom: 20px;">File Attachments</h1>\n          <form :action="action" id="upload-form" method="post"\n            @change="$emit(\'upload\')" enctype=multipart/form-data>\n            <input type="hidden" name="_token" :value="value">\n            <div class="file is-small">\n              <label class="file-label">\n                <input class="file-input" type="file" name="file" id="file">\n                <span class="file-cta">\n                  <span class="file-icon">\n                    <i class="fas fa-upload"></i>\n                  </span>\n                  <span class="file-label">\n                    Choose a file\u2026\n                  </span>\n                </span>\n                <span class="file-name">\n                  Screen Shot 2017-07-29 at 15.54.25.png\n                </span>\n              </label>\n              <input class="button is-primary is-small" type="submit" value="Upload">\n            </div>\n            <slot></slot>\n            <div class="button-container">\n              <div class="button is-link" @click="$emit(\'close\')"\n                style="float:right;">\n                <span>Close</span>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+
+  methods: {
+    upload: function upload() {
+      $('upload-form').submit();
+    }
   }
 });
 
 Vue.component('modal-confirm', {
   props: ['action', 'value', 'category'],
 
-  template: '\n    <div class="modal is-active">\n      <div class="modal-background" style="background: rgba(0, 0, 0, 0.2)"></div>\n      <div class="modal-content">\n        <div class="box bg-white">\n          Are you sure do you want to delete this {{ category }}?\n          <div class="is-pulled-right">\n            <form\n              :action="action" method="post">\n              <input type="hidden" name="_token" :value="value">\n              <input type="hidden" name="_method" value="DELETE">\n              <input class="button is-danger confirm-modal" type="submit" @submit="update=false" value="Delete" />\n              <a class="button is-light" @click="$emit(\'close\')">Cancel</a>\n            </form>\n          </div>\n          <div class="is-clearfix"></div>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+  template: '\n    <div class="modal is-active">\n      <div class="modal-background" style="background: rgba(0, 0, 0, 0.2)"></div>\n      <div class="modal-content">\n        <div class="box bg-white">\n          Are you sure do you want to delete this {{ category }}?\n          <div class="is-pulled-right">\n            <form\n              :action="action" method="post">\n              <input type="hidden" name="_token" :value="value">\n              <input type="hidden" name="_method" value="DELETE">\n              <input class="button is-danger confirm-modal" type="submit" @submit="update=false" value="Delete" />\n              <a class="button is-light" @click="$emit(\'close\')">Cancel</a>\n            </form>\n          </div>\n          <div class="is-clearfix"></div>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  '
 
+});
+Vue.component('file-list', {
+  props: ['files'],
+  template: '\n    <div class="tags has-addons">\n        <slot></slot>\n      </file>\n    </div>\n  ',
   data: function data() {
     return {};
-  }
+  },
+
+
+  methods: {}
+
+});
+
+Vue.component('file', {
+  template: '\n  <div>\n    <span class="tag is-warning is-medium">\n      <slot></slot>\n    </span>\n  <a class="tag is-delete is-small" style="margin-right: 10px"></a>\n  </div>\n  '
+
 });
 
 var app = new Vue({
@@ -153,14 +177,22 @@ var app = new Vue({
     showModal: false,
     showCategoryModal: false,
     showSectionModal: false,
+    showModalFiles: false,
     update: false,
     id: '',
+    equipmentId: '',
+    issueId: '',
     isActive: false,
+    isActiveMF: false,
     isActiveCM: false,
-    isActiveSM: false
+    isActiveSM: false,
+    files: []
   },
 
   methods: {
+    openModalFiles: function openModalFiles() {
+      this.showModalFiles = false, this.files = [];
+    },
     fillModal: function fillModal(id, table) {
       this.update = true;
       //this.id is required
@@ -176,6 +208,10 @@ var app = new Vue({
         console.log('error on http get ' + table + ' with id ' + id);
       });
     },
+    saveId: function saveId(id) {
+      this.equipmentId = id;
+      this.isActive = true;
+    },
     openEmptyModal: function openEmptyModal() {
       this.showModal = true;
       this.update = false;
@@ -185,6 +221,21 @@ var app = new Vue({
           $(this).val('');
           console.log($(this).attr('name'));
         }
+      });
+    },
+    getFiles: function getFiles(id) {
+      var _this = this;
+
+      this.issueId = id;
+
+      var self = this;
+      this.$http.get('/issue/' + id + '/files').then(function (response) {
+        for (var i = 0; i < response.data.length; i++) {
+          self.files[i] = response.data[i];
+        }
+        _this.showModalFiles = true;
+      }, function (response) {
+        console.log('error on http get files');
       });
     }
   } //end of methods

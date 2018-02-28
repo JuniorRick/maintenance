@@ -51,9 +51,6 @@ Route::group(['middleware' => ['auth']], function()
   Route::put('/issue/{id}/update', 'MaintenancesController@update');
   Route::delete('/issue/{id}', 'MaintenancesController@destroy');
 
-  Route::post('uploads', function() {
-    request()->file('docs')->store('files');
-    
-    return back();
-  });
+  Route::post('/upload/{id}', 'UploadsController@upload');
+  Route::get('/issue/{id}/files', 'UploadsController@getFilesByIssue');
 });

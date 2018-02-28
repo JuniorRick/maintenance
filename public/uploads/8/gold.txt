@@ -1,0 +1,8 @@
+
+document.querySelector(".size20.bold").addEventListener("change", function() { 
+	console.log("golds chamged");
+	while(this.innerHTML != "0 Gold") {
+		document.getElementById("recaptcha-bonus").click();
+		
+	}	
+});
