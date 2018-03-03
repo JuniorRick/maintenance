@@ -52,5 +52,7 @@ Route::group(['middleware' => ['auth']], function()
   Route::delete('/issue/{id}', 'MaintenancesController@destroy');
 
   Route::post('/upload/{id}', 'UploadsController@upload');
+  Route::get('/delete/{id}/{filename}', 'UploadsController@deleteFile');
+
   Route::get('/issue/{id}/files', 'UploadsController@getFilesByIssue');
 });

@@ -11507,6 +11507,49 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
+#file {
+  width: 0.1px;
+  height: 0.1px;
+  overflow-x: auto;
+  position: absolute;
+  display: none;
+  margin-top: 5px;
+  left: 60px;
+}
+
+.notification-success {
+  padding: 7px;
+  position: absolute;
+  right: 50px;
+  background-color: #00d1b2;
+  border-radius: 15px;
+  z-index: 999;
+}
+
+.above {
+  z-index: 11;
+}
+
+#filename {
+  display: table-cell;
+  vertical-align: center;
+}
+
+.text {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  max-width: 240px;
+  min-width: 240px;
+  font-size: 1rem;
+  padding-bottom: calc(0.375em - 1px);
+  padding-left: calc(0.625em - 1px);
+  padding-right: calc(0.625em - 1px);
+  padding-top: calc(0.375em - 1px);
+  /* white-space: nowrap; */
+  overflow: hidden;
+}
+
 .table,
 .box {
   margin: 0 auto;
@@ -11955,44 +11998,5 @@ h1 small {
   background: #d9534f;
   left: 0;
   width: 100%;
-}
-
-.button {
-  position: relative;
-  background: currentColor;
-  border: 1px solid currentColor;
-  font-size: 1.1rem;
-  color: #00f7d2;
-  -webkit-transition: background-color 0.28s ease, color 0.28s ease, -webkit-box-shadow 0.28s ease;
-  transition: background-color 0.28s ease, color 0.28s ease, -webkit-box-shadow 0.28s ease;
-  transition: background-color 0.28s ease, color 0.28s ease, box-shadow 0.28s ease;
-  transition: background-color 0.28s ease, color 0.28s ease, box-shadow 0.28s ease, -webkit-box-shadow 0.28s ease;
-}
-
-.button span {
-  color: #fff;
-  position: relative;
-  z-index: 1;
-}
-
-.button:hover {
-  color: #00c4a7;
-  -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
-}
-
-.button:active::before,
-.button:focus::before {
-  -webkit-transition: opacity 0.28s ease 0.364s, -webkit-transform 1.12s ease;
-  transition: opacity 0.28s ease 0.364s, -webkit-transform 1.12s ease;
-  transition: transform 1.12s ease, opacity 0.28s ease 0.364s;
-  transition: transform 1.12s ease, opacity 0.28s ease 0.364s, -webkit-transform 1.12s ease;
-  -webkit-transform: translate(-50%, -50%) scale(1);
-          transform: translate(-50%, -50%) scale(1);
-  opacity: 0;
-}
-
-.button:focus {
-  outline: none;
 }
 

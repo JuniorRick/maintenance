@@ -19,6 +19,8 @@
       position: fixed;
       z-index: 1;
       width: 100vw;
+      color: #000;
+      border-radius: 20px;
     }
   </style>
 </head>
@@ -56,9 +58,14 @@
   </div>
 </nav>
 
+
   <div class="section" id="app">
+    @if (Session::has('message'))
+      <div class="alert alert-info notification-success">{{ Session::get('message') }}</div>
+    @endif
 
     <div class="container" style="min-width:980px">
+
 
       @yield('content')
 
@@ -77,8 +84,12 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $('select[name="equipment_id"]').select2();
-      $('select[name="equipment_id"]').css('width', '400px');
+
+      setTimeout(() => { $('.alert').slideUp() }, 5000);
+
+
+      // // $('select[name="equipment_id"]').select2();
+      // $('select[name="equipment_id"]').css('width', '400px');
     });
   </script>
 </body>

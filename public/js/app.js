@@ -138,15 +138,22 @@ Vue.component('modal', {
 
 Vue.component('modal-files', {
   props: ['action', 'value'],
-  template: '\n    <div class="modal is-active">\n      <div class="modal-background">\n         </div>\n      <div class="modal-content">\n\n        <div class="container" style="margin: 0 auto;">\n          <h1 style="margin-bottom: 20px;">File Attachments</h1>\n          <form :action="action" id="upload-form" method="post"\n            @change="$emit(\'upload\')" enctype=multipart/form-data>\n            <input type="hidden" name="_token" :value="value">\n            <div class="file is-small">\n              <label class="file-label">\n                <input class="file-input" type="file" name="file" id="file">\n                <span class="file-cta">\n                  <span class="file-icon">\n                    <i class="fas fa-upload"></i>\n                  </span>\n                  <span class="file-label">\n                    Choose a file\u2026\n                  </span>\n                </span>\n                <span class="file-name">\n                  Screen Shot 2017-07-29 at 15.54.25.png\n                </span>\n              </label>\n              <input class="button is-primary is-small" type="submit" value="Upload">\n            </div>\n            <slot></slot>\n            <div class="button-container">\n              <div class="button is-link" @click="$emit(\'close\')"\n                style="float:right;">\n                <span>Close</span>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+  template: '\n    <div class="modal is-active">\n      <div class="modal-background">\n         </div>\n      <div class="modal-content">\n\n        <div class="container" style="margin: 0 auto;">\n          <h1 style="margin-bottom: 20px;">File Attachments</h1>\n          <form :action="action" id="upload-form" method="post"\n            enctype=multipart/form-data>\n            <input type="hidden" name="_token" :value="value">\n            <div class="file is-small">\n\n            <div class="box">\n              <label class=" button above" for="file">Choose a file</label>\n              <input type="file" id="file" name="file" @change="getFileName">\n              <div class="text" id="file-name">{{ fileName }}</div>\n              <input type="submit" value="Upload" class="button is-link is-pulled-right">\n            </div>\n            </div>\n            <slot></slot>\n            <div class="button-container">\n              <div class="button is-link" @click="$emit(\'close\')"\n                style="float:right;">\n                <span>Close</span>\n              </div>\n            </div>\n          </form>\n        </div>\n      </div>\n      <button class="modal-close is-large" @click="$emit(\'close\')" aria-label="close"></button>\n    </div>\n  ',
+  data: function data() {
+    return {
+      fileName: 'No file selected...'
+
+    };
+  },
+
 
   methods: {
-    upload: function upload() {
-      $('upload-form').submit();
+    getFileName: function getFileName() {
+
+      this.fileName = $('#file').val().split('\\')[2];
     }
   }
 });
-
 Vue.component('modal-confirm', {
   props: ['action', 'value', 'category'],
 
@@ -154,19 +161,17 @@ Vue.component('modal-confirm', {
 
 });
 Vue.component('file-list', {
-  props: ['files'],
-  template: '\n    <div class="tags has-addons">\n        <slot></slot>\n      </file>\n    </div>\n  ',
-  data: function data() {
-    return {};
-  },
 
-
-  methods: {}
+  template: '\n    <div class="tags has-addons">\n        <slot></slot>\n      </file>\n    </div>\n  '
 
 });
 
 Vue.component('file', {
-  template: '\n  <div>\n    <span class="tag is-warning is-medium">\n      <slot></slot>\n    </span>\n  <a class="tag is-delete is-small" style="margin-right: 10px"></a>\n  </div>\n  '
+  props: ['href'],
+
+  template: '\n  <div>\n    <span class="tag is-warning is-medium">\n      <slot></slot>\n    </span>\n\n    <a class="tag is-delete is-small" :href="href" style="margin-right: 10px"></a>\n  </div>\n  ',
+
+  methods: {}
 
 });
 
@@ -190,7 +195,7 @@ var app = new Vue({
   },
 
   methods: {
-    openModalFiles: function openModalFiles() {
+    closeModalFiles: function closeModalFiles() {
       this.showModalFiles = false, this.files = [];
     },
     fillModal: function fillModal(id, table) {

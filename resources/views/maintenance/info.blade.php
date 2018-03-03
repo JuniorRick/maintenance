@@ -14,6 +14,7 @@
     </div>
 
 
+
   </div>
   <table class="table is-fullwidth">
     <thead>
@@ -52,9 +53,11 @@
         <td>{{ isset($issue->details) ? $issue->details : "" }}</td>
         <td>{{ isset( $issue->user_id) ? $issue->getUserName() : "" }}</td>
 
-        <td style="min-width: 130px;">
+        <td style="min-width: 220px;">
+
           <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
             @click="fillModal({{ $issue->id}}, 'issue'), showModal=true">Edit</a>
+
           <a class="button is-danger is-small" style="float: left; margin-right: 5px;"
             type="button" @click="isActive=true">Delete</a>
 
@@ -62,21 +65,7 @@
             type="button" @click="getFiles({{ $issue->id }})" :files="files">Attachments</a>
 
 
-          <modal-files v-show="showModalFiles" :action="'/upload/' + issueId"
-            @close="openModalFiles" value={{ csrf_token() }} >
 
-            <div  style="margin: 5px; padding: 5px; border: 1px solid black">
-              <file-list :files="files">
-                <file v-for="file in files" :title="file.title">
-                  <a :href="'../../uploads/' +file.issue_id + '/' + file.name"
-                    target="_blank" title="">
-                    @{{file.name}}
-                  </a>
-                </file>
-              </file-list>
-            </div>
-
-          </modal-files>
 
           <modal-confirm :action="'/issue/' + issueId"
             v-show="isActive" @close="isActive=false" value={{ csrf_token() }}
@@ -86,6 +75,22 @@
         </td>
       </tr>
     @endforeach
+
+    <modal-files v-show="showModalFiles" :action="'/upload/' + issueId"
+      @close="closeModalFiles" value={{ csrf_token() }} >
+
+      <div class="box" style="margin-top: 10px;">
+        <file-list :files="files">
+          <file v-for="file in files" :href="'/delete/'+ file.issue_id + '/' + file.name">
+            <a :href="'../../uploads/' +file.issue_id + '/' + file.name"
+              target="_blank" title="">
+              @{{file.name}}
+            </a>
+          </file>
+        </file-list>
+      </div>
+
+    </modal-files>
 
     </tbody>
   </table>

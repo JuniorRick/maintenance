@@ -67,24 +67,16 @@ Vue.component('modal-files', {
         <div class="container" style="margin: 0 auto;">
           <h1 style="margin-bottom: 20px;">File Attachments</h1>
           <form :action="action" id="upload-form" method="post"
-            @change="$emit('upload')" enctype=multipart/form-data>
+            enctype=multipart/form-data>
             <input type="hidden" name="_token" :value="value">
             <div class="file is-small">
-              <label class="file-label">
-                <input class="file-input" type="file" name="file" id="file">
-                <span class="file-cta">
-                  <span class="file-icon">
-                    <i class="fas fa-upload"></i>
-                  </span>
-                  <span class="file-label">
-                    Choose a file…
-                  </span>
-                </span>
-                <span class="file-name">
-                  Screen Shot 2017-07-29 at 15.54.25.png
-                </span>
-              </label>
-              <input class="button is-primary is-small" type="submit" value="Upload">
+
+            <div class="box">
+              <label class=" button above" for="file">Choose a file</label>
+              <input type="file" id="file" name="file" @change="getFileName">
+              <div class="text" id="file-name">{{ fileName }}</div>
+              <input type="submit" value="Upload" class="button is-link is-pulled-right">
+            </div>
             </div>
             <slot></slot>
             <div class="button-container">
@@ -99,14 +91,20 @@ Vue.component('modal-files', {
       <button class="modal-close is-large" @click="$emit('close')" aria-label="close"></button>
     </div>
   `,
+  data() {
+    return {
+      fileName: 'No file selected...',
+
+    };
+  },
 
   methods: {
-    upload() {
-      $('upload-form').submit();
+    getFileName() {
+
+     this.fileName = $('#file').val().split('\\')[2];
     }
   }
 });
-
 Vue.component('modal-confirm', {
   props: [
     'action',
@@ -138,34 +136,32 @@ Vue.component('modal-confirm', {
 
 });
 Vue.component('file-list', {
-  props: ['files'],
+
   template: `
     <div class="tags has-addons">
         <slot></slot>
       </file>
     </div>
   `,
-  data() {
-    return {
-    };
-  },
-
-  methods: {
-
-  },
-
 
 });
 
 Vue.component('file', {
+  props: ['href'],
+
   template: `
   <div>
     <span class="tag is-warning is-medium">
       <slot></slot>
     </span>
-  <a class="tag is-delete is-small" style="margin-right: 10px"></a>
+
+    <a class="tag is-delete is-small" :href="href" style="margin-right: 10px"></a>
   </div>
   `,
+
+  methods: {
+
+  },
 
 });
 
@@ -192,7 +188,7 @@ const app = new Vue({
 
     methods: {
 
-      openModalFiles() {
+      closeModalFiles() {
           this.showModalFiles = false,
           this.files = [];
       },
