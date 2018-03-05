@@ -59,13 +59,15 @@
             @click="fillModal({{ $issue->id}}, 'issue'), showModal=true">Edit</a>
 
           <a class="button is-danger is-small" style="float: left; margin-right: 5px;"
-            type="button" @click="isActive=true">Delete</a>
+            type="button" @click="saveInfoId({{ $issue->id }})">Delete</a>
 
-          <a class="button is-info is-small" style="float: left; margin-right: 5px;"
-            type="button" @click="getFiles({{ $issue->id }})" :files="files">Attachments</a>
-
-
-
+          @if(\App\File::where('issue_id', $issue->id)->get()->count() > 0)
+            <a class="button is-info is-small" style="float: left; margin-right: 5px;"
+              type="button" @click="getFiles({{ $issue->id }})" :files="files"><i class="fa fa-file-alt"></i></a>
+          @else
+            <a class="button is-info is-small" style="float: left; margin-right: 5px;"
+              type="button" @click="getFiles({{ $issue->id }})" :files="files"><i class="fa fa-minus"></i></a>
+          @endif
 
           <modal-confirm :action="'/issue/' + issueId"
             v-show="isActive" @close="isActive=false" value={{ csrf_token() }}

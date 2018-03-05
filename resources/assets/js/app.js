@@ -178,6 +178,8 @@ const app = new Vue({
       update: false,
       id: '',
       equipmentId: '',
+      categoryId: '',
+      sectionId: '',
       issueId: '',
       isActive: false,
       isActiveMF: false,
@@ -213,6 +215,18 @@ const app = new Vue({
 
       saveId(id) {
         this.equipmentId = id;
+        this.isActive=true;
+      },
+      saveCId(id) {
+        this.categoryId = id;
+        this.isActiveCM=true;
+      },
+      saveSId(id) {
+        this.sectionId = id;
+        this.isActiveSM=true;
+      },
+      saveInfoId(id) {
+        this.issueId = id;
         this.isActive=true;
       },
 

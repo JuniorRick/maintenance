@@ -38,17 +38,16 @@
 
             <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
               @click="fillModal({{ $category->id}}, 'groups/category'), showCategoryModal=true">Edit</a>
-              <a class="button is-danger is-small" style="float: left;" type="button"
-                @click="isActiveCM=true">Delete</a>
+              {{-- <a class="button is-danger is-small" style="float: left;" type="button"
+                @click="saveCId({{ $category->id }})">Delete</a>
 
-            <modal-confirm action="{{ url('/groups/category', ['id' => $category->id]) }}"
+            <modal-confirm :action="'/groups/category/' + categoryId"
               v-show="isActiveCM" @close="isActiveCM=false" value={{ csrf_token() }}
               category="category">
-            </modal-confirm>
+            </modal-confirm> --}}
 
         </td>
       @endforeach
-
         </tr>
       </tbody>
     </table>
@@ -104,13 +103,13 @@
             <a style="float:left; margin-right: 5px;" class="button is-primary is-small"
               @click="fillModal({{ $section->id}}, 'groups/section'), showSectionModal=true">Edit</a>
 
-            <a class="button is-danger is-small" style="float: left;" type="button"
-              @click="isActiveSM=true">Delete</a>
+            {{-- <a class="button is-danger is-small" style="float: left;" type="button"
+              @click="saveSId({{ $section->id }})">Delete</a>
 
-            <modal-confirm action="{{ url('/groups/section', ['id' => $section->id]) }}"
+            <modal-confirm :action="'/groups/section/' + sectionId"
               v-show="isActiveSM" @close="isActiveSM=false" value={{ csrf_token() }}
               category="section">
-            </modal-confirm>
+            </modal-confirm> --}}
         </td>
       @endforeach
 

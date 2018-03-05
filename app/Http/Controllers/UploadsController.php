@@ -36,7 +36,13 @@ class UploadsController extends Controller
     public function getFilesByIssue($id) {
       $files = \App\File::where('issue_id', $id)->get();
 
-     return response()->json($files);
+      if(count($files) < 1) {
+        foreach($files as $file) {
+          unlink('uploads/' . $id . '/' . $file->name);
+        }
+
+      }
+        return response()->json($files);
     }
 
     public function deleteFile($id, $filename) {

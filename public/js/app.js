@@ -186,6 +186,8 @@ var app = new Vue({
     update: false,
     id: '',
     equipmentId: '',
+    categoryId: '',
+    sectionId: '',
     issueId: '',
     isActive: false,
     isActiveMF: false,
@@ -215,6 +217,18 @@ var app = new Vue({
     },
     saveId: function saveId(id) {
       this.equipmentId = id;
+      this.isActive = true;
+    },
+    saveCId: function saveCId(id) {
+      this.categoryId = id;
+      this.isActiveCM = true;
+    },
+    saveSId: function saveSId(id) {
+      this.sectionId = id;
+      this.isActiveSM = true;
+    },
+    saveInfoId: function saveInfoId(id) {
+      this.issueId = id;
       this.isActive = true;
     },
     openEmptyModal: function openEmptyModal() {
