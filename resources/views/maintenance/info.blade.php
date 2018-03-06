@@ -44,7 +44,7 @@
       @endphp
 
     @foreach ($issues as $issue)
-      <tr>
+      <tr class="filter">
         <td> {{ ++$counter }}</td>
         <td>{{ isset($issue->equipment_id) ?
           $issue->getEquipmentName() : "" }}</td>

@@ -36,7 +36,7 @@
       @endphp
 
     @foreach ($equipments as $equipment)
-      <tr>
+      <tr class="filter">
         <td> {{ ++$counter }}</td>
         <td>{{ isset($equipment->category_id) ?
           $equipment->getCategoryName($equipment->category_id) : "" }}</td>

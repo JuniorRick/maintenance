@@ -22,6 +22,12 @@
       color: #000;
       border-radius: 20px;
     }
+
+    #search_cartridge {
+      height: 30px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
@@ -52,9 +58,11 @@
         <a class="navbar-item" href="https://www.youtube.com/watch?v=iT-nrgWNb2M">
           To be continued...
         </a>
-      </div>
 
     </div>
+    <input type="search" class="control" id="search_cartridge"
+      name="search" placeholder="Search (case sensitive)" value="">
+  </div>
   </div>
 </nav>
 
@@ -87,6 +95,11 @@
 
       setTimeout(() => { $('.alert').slideUp() }, 5000);
 
+      $('#search_cartridge').keyup(function() {
+        $('tr').show();
+        var search = $('#search_cartridge').val();
+        $('.filter:not(:contains("'+ search + '"))').hide();
+      });
 
       // // $('select[name="equipment_id"]').select2();
       // $('select[name="equipment_id"]').css('width', '400px');

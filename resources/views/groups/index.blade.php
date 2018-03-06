@@ -30,7 +30,7 @@
         @endphp
 
       @foreach ($categories as $category)
-        <tr>
+        <tr class="filter">
           <td> {{ ++$counter }}</td>
           <td style="min-width: 200px;">{{ isset($category->name) ? $category->name : "" }}</td>
 
@@ -94,7 +94,7 @@
         @endphp
 
       @foreach ($sections as $section)
-        <tr>
+        <tr class="filter">
           <td> {{ ++$counter }}</td>
           <td style="min-width: 200px;">{{ isset($section->name) ? $section->name : "" }}</td>
 
