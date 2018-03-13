@@ -1,5 +1,6 @@
 @extends('layouts.master') @section('title', 'Equipments') @section('content')
 
+
 <div class="box">
   <div class="border-bottom" style="display: flex; flex-direction: row;">
     <button class="button is-primary" @click="openEmptyModal"
@@ -8,14 +9,13 @@
       <div style="text-align:center;">
         {!! isset( $equipment)
         ?  "<b>" . $equipment->name . "</b>" . " [SN: " . $equipment->serial_number ."] "
-        . '( ' . $equipment->office . ' )'
+        . '(Office: ' . $equipment->office . ')'
         : "something went wrong" !!}
       </div>
     </div>
-
-
-
   </div>
+
+
   <table class="table is-fullwidth">
     <thead>
       <tr>

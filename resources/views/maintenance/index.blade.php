@@ -1,5 +1,15 @@
 @extends('layouts.master') @section('title', 'Issues') @section('content')
 
+
+<div class="box">
+  <form class="is-flex" id="form-range" action="" method="get" style="display:none">
+    {{ csrf_field() }}
+    <input class="input" type="text" id="date-range" name="" value="">
+    <input class="button is-link" id="submit-range" type="submit" value="Submit">
+  </form>
+
+</div>
+
 <div class="box">
   {{-- <div class="border-bottom">
     <button class="button is-primary" @click="openEmptyModal">Add new equipment</button>
@@ -47,11 +57,13 @@
             $equipment->getSectionName($equipment->section_id) : "" }}</td>
         <td>{{ isset($equipment->office) ? $equipment->office : "" }}</td>
         <td>{{ isset( $equipment->details) ? $equipment->details : "" }}</td>
-
-        @if(\App\Maintenance::where('equipment_id', $equipment->id)->get()->count() > 0)
+        @php
+          $count = \App\Maintenance::where('equipment_id', $equipment->id)->get()->count();
+        @endphp
+        @if( $count > 0)
         <td style="min-width: 130px;">
           <a style="float:left; margin-right: 5px;" class="button is-link is-small"
-          href="/issue/{{ $equipment->id }}/info">Info</a>
+          href="/issue/{{ $equipment->id }}/info">{{ $count }} Info</a>
         @else
           <td style="min-width: 130px;">
             <a style="float:left; margin-right: 5px;" class="button is-light is-small"

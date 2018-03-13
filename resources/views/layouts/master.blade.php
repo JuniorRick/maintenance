@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="{!! asset('css/app.css') !!}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{!! asset('css/daterangepicker.min.css') !!}">
+
   <style media="screen">
     #navMenu .navbar-start a{
        padding: 25px;
@@ -28,12 +30,13 @@
       margin-top: 10px;
       border-radius: 5px;
     }
+
   </style>
 </head>
 <body>
 
   <nav class="navbar is-white is-mobile">
-  <div class="container " style="padding-top: 0; margin-top:0;">
+  <div class="container nav-menu" style="padding-top: 0; margin-top:0;">
     <div class="navbar-brand">
       <a class="navbar-item brand-text" href="/home">
         CRDM
@@ -80,6 +83,7 @@
     </div>
   </div>
 
+  <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script
 			  src="http://code.jquery.com/jquery-3.3.1.min.js"
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -101,9 +105,35 @@
         $('.filter:not(:contains("'+ search + '"))').hide();
       });
 
-      // // $('select[name="equipment_id"]').select2();
-      // $('select[name="equipment_id"]').css('width', '400px');
+
+    	$('#date-range').dateRangePicker(
+    	{
+    		showShortcuts: true,
+    		shortcuts :
+    		{
+    			'prev-days': [3,5,7],
+    			'prev': ['week','month','year'],
+    			'next-days':null,
+    			'next':null
+    		}
+      });
+
+      // $('#date-range').bind('input', function() {
+      //   console.log('value' + $(this).val());
+      // });
+
+      $('#submit-range').on( 'click', function(e) {
+        var dates = $('#date-range').val().split(' ');
+
+        $('#form-range').attr('action', `/report/${dates[0]}/${dates[2]}`);
+        $('#form-range').submit();
+
+      })
     });
+
   </script>
+  {{-- <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script> --}}
+  <script src="{!! asset('js/daterangepicker.min.js') !!}" charset="utf-8"></script>
+
 </body>
 </html>

@@ -12000,3 +12000,20 @@ h1 small {
   width: 100%;
 }
 
+@media print {
+  .nav-menu,
+  nav,
+  .button {
+    display: none;
+  }
+
+  .container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .container::before {
+    display: none;
+  }
+}
+

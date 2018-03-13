@@ -55,4 +55,11 @@ Route::group(['middleware' => ['auth']], function()
   Route::get('/delete/{id}/{filename}', 'UploadsController@deleteFile');
 
   Route::get('/issue/{id}/files', 'UploadsController@getFilesByIssue');
+
+  Route::get('/report/{begin}/{end}', function($begin, $end) {
+    $issues = \App\Maintenance::where('created_at', '>=', $begin)
+    ->where('created_at', '<=', $end)->get();
+
+    return view('report')->with('issues', $issues);
+  });
 });
