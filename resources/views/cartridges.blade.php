@@ -3,11 +3,9 @@
 @section('content')
   <div style="margin-top:30px;"></div>
 
-
-
   <div class="container bg_white">
 
-    <div class="box" style="margin:20px 0;">
+    {{-- <div class="box" style="margin:20px 0;">
     <form  id="form-range" action="" method="get" >
       {{ csrf_field() }}
       <div class="form-row">
@@ -19,7 +17,15 @@
           <input class="btn btn-default" id="submit-range" type="submit" value="Preview">
       </div>
     </div>
+  </div> --}}
+
     </form>
+    <div class="range-box">
+      <form class="is-flex" id="form-range" action="" method="get">
+        {{ csrf_field() }}
+        <input class="input" type="text" id="date-range" placeholder="Select report range">
+        <input class="button is-link" id="submit-range" type="submit" value="Submit">
+      </form>
     </div>
 
     <br>

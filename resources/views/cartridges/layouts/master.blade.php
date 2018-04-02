@@ -19,9 +19,9 @@
     body {
       background: #6b9cc7;
     }
-    .container {
+    /* .container {
       border-bottom: 1px solid #fff;
-    }
+    } */
     .bg_white{
       background: #fff;
     }
@@ -42,13 +42,79 @@
       margin: 0 auto;
       margin-top: 10px;
     }
+    .navbar {
+      height: 50px;
+      position: fixed;
+      z-index: 1;
+      width: 70vw;
+      margin-left: -100px;
+      color: #000;
+      /* border-radius: 5px; */
+      top: 0;
+      background-color: #fff;
+    }
+
+    .range-box {
+      margin: 5px;
+      padding: 20px;
+      width 100%;
+      /* border: 1px solid black; */
+      border-radius: 7px;
+      background-color: #6b9cc7;
+    }
+
+    #form-range {
+        line-height: 25px;
+        font-size: 20px;
+    }
+
+    #date-range {
+      border-radius: 5px;
+      width: 90%;
+    }
+
+    #submit-range {
+      border-radius: 3px;
+      border: 1px solid transparent;
+      margin-top: -3px;
+      color: #fff;
+      border: 0;
+      background-color: #337ab7;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    #submit-range:hover {
+            background-color: #205685;
+    }
   </style>
 </head>
 <body>
   <div style="padding-top: 50px"></div>
   <div class="container">
 
-    {!! menu('Cartridges', 'bootstrap') !!}
+    {{-- {!! menu('Cartridges', 'bootstrap') !!} --}}
+    <nav class="navbar">
+     <div class="box">
+       <div class="header">
+         <a class="navbar-brand" href="/" style="color: #000;">CRDM</a>
+       </div>
+       <ul class="nav navbar-nav">
+         <li class="active"><a href="/cart/home" style="color: #000;">Home</a></li>
+         <li><a href="/toners" style="color: #000;">Toners</a></li>
+         <li><a href="/cartridges" style="color: #000;">Cartridges</a></li>
+       </ul>
+     </div>
+    </nav>
+
   </div>
 
   @yield('content')
