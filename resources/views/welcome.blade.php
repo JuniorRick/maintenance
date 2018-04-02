@@ -82,7 +82,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        {{-- <a href="{{ url('/maintenance/home') }}">Home</a> --}}
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
@@ -99,7 +99,8 @@
                     @if (!Auth::check())
                       <p>Please <a href="{{ url('/login') }}">log in</a> to continue</p>
                     @else
-                      <a href="/home">Let's get started</a>
+                      <a href="/maintenance/home">Equipments Maintenance</a>
+                      <a href="/cart/home">Cartridges Manager</a>
                     @endif
 
                 </div>

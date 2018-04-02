@@ -38,7 +38,7 @@
   <nav class="navbar is-white is-mobile">
   <div class="container nav-menu" style="padding-top: 0; margin-top:0;">
     <div class="navbar-brand">
-      <a class="navbar-item brand-text" href="/home">
+      <a class="navbar-item brand-text" href="/">
         CRDM
       </a>
       <div class="navbar-burger burger" data-target="navMenu">
@@ -125,7 +125,7 @@
       $('#submit-range').on( 'click', function(e) {
         var dates = $('#date-range').val().split(' ');
 
-        $('#form-range').attr('action', `/report/${dates[0]}/${dates[2]}`);
+        $('#form-range').attr('action', `/report/equipments/${dates[0]}/${dates[2]}`);
         $('#form-range').submit();
 
       })

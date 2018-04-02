@@ -40,8 +40,16 @@ class UploadsController extends Controller
         foreach($files as $file) {
           unlink('uploads/' . $id . '/' . $file->name);
         }
-
       }
+
+      foreach($files as $file) {
+        if(is_file('uploads/' . $id . '/' . $file->name)) {
+          continue;
+        }
+        \App\File::where([['issue_id', '=', $id], ['name', '=', $file->name]])->first()->delete();
+      }
+
+
         return response()->json($files);
     }
 

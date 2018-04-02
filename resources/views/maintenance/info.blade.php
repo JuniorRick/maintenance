@@ -84,7 +84,7 @@
       <div class="box" style="margin-top: 10px;">
         <file-list :files="files">
           <file v-for="file in files" :href="'/delete/'+ file.issue_id + '/' + file.name">
-            <a :href="'../../uploads/' +file.issue_id + '/' + file.name"
+            <a :href="'../../uploads/' + file.issue_id + '/' + file.name"
               target="_blank" title="">
               @{{file.name}}
             </a>
